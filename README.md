@@ -82,6 +82,24 @@ Follow these steps to get your development environment set up: (Before Run Start
 ```csharp
 docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 ```
+Different steps for Mac OS
+
+For Mac, use the following command instead:
+```csharp
+docker compose -f docker-compose.yml -f docker-compose.override.yml up -d
+```
+
+Replace the volumes in docker-compose.override.yml:
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+With:
+    volumes:
+      - ~/.microsoft/usersecrets:/home/app/.microsoft/usersecrets:ro
+      - ~/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+Reference: https://joonasw.net/view/moving-net-core-user-secrets-to-another-computer
 
 4. Wait for docker compose all microservices. That’s it! (some microservices need extra time to work so please wait if not worked in first shut)
 
