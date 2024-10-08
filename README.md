@@ -82,6 +82,7 @@ Follow these steps to get your development environment set up: (Before Run Start
 ```csharp
 docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 ```
+
 Different steps for Mac OS
 
 For Mac, use the following command instead:
@@ -100,6 +101,21 @@ With:
       - ~/ASP.NET/Https:/home/app/.aspnet/https:ro
 
 Reference: https://joonasw.net/view/moving-net-core-user-secrets-to-another-computer
+
+Generate the developer certificate:
+dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p $CREDENTIAL_PLACEHOLDER$
+
+Trust the the developer certificate:
+dotnet dev-certs https --trust
+
+Mount the volume:
+- ~/.aspnet/https:/https:ro
+
+Add the environment variables:
+- ASPNETCORE_Kestrel__Certificates__Default__Password=password
+- ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+
+Reference: https://github.com/aspnetrun/run-aspnetcore-microservices/issues/85
 
 4. Wait for docker compose all microservices. That’s it! (some microservices need extra time to work so please wait if not worked in first shut)
 
